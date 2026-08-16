@@ -116,9 +116,17 @@ function render() {
     : I18N.t('home.over', { v: volLabel(-rest) });
 
   const i = moodIndex(pct);
-  const src = `emoji/${MOOD[i - 1]}.png`;
-  if (!el.img.src.endsWith(src)) el.img.src = src;
   el.fallback.textContent = MOOD_FALLBACK[i - 1];
+  const src = `emoji/${MOOD[i - 1]}.png`;
+  if (el.img.dataset.src !== src) {
+    el.img.dataset.src = src;
+    el.img.src = src;
+    /* Beim Wechsel nicht zurück aufs Textzeichen springen — das flackert bei
+       jedem Eintrag. Nur solange noch nie ein Bild ankam, bleibt es stehen. */
+    if (el.img.complete && el.img.naturalWidth > 0) {
+      el.img.hidden = false; el.fallback.hidden = true;
+    }
+  }
 
   el.undo.disabled = (S.log[todayKey()] || []).length === 0;
   renderQuick();
@@ -126,9 +134,14 @@ function render() {
   renderSummaries();
 }
 
-el.img.addEventListener('error', () => {     // Platzhalter fehlt: Text-Emoji zeigen
-  el.img.hidden = true;
-  el.fallback.hidden = false;
+/* Emoji: Das Textzeichen steht sofort da, das Bild löst es erst ab, wenn es
+   nachweislich geladen ist. So ist nie eine leere Fläche zu sehen — weder beim
+   ersten Aufruf mit kaltem Cache noch wenn eine Datei fehlt. */
+el.img.addEventListener('load', () => {
+  if (el.img.naturalWidth > 0) { el.img.hidden = false; el.fallback.hidden = true; }
+});
+el.img.addEventListener('error', () => {
+  el.img.hidden = true; el.fallback.hidden = false;
 });
 
 function renderQuick() {
@@ -151,8 +164,10 @@ function addDrink(ml) {
   const k = todayKey();
   (S.log[k] ||= []).push(ml);
   save(); render();
-  el.img.classList.add('pop');
-  setTimeout(() => el.img.classList.remove('pop'), 400);
+  el.img.classList.add('pop'); el.fallback.classList.add('pop');
+  setTimeout(() => {
+    el.img.classList.remove('pop'); el.fallback.classList.remove('pop');
+  }, 400);
   toast(I18N.t('toast.added', { v: volLabel(ml) }));
 }
 el.undo.addEventListener('click', () => {

@@ -111,7 +111,9 @@ Ersetze die zehn PNGs in `emoji/` durch eigene, gleiche Dateinamen behalten:
 
 `eins.png` = am schlechtesten (0 % getrunken) … `zehn.png` = am besten (Ziel erreicht).
 
-Quadratisch, am besten 512 × 512 px mit transparentem Hintergrund. Fehlt eine Datei, zeigt die App ersatzweise ein Text-Emoji.
+Quadratisch, am besten 512 × 512 px mit transparentem Hintergrund.
+
+Bis ein Bild geladen ist, steht an seiner Stelle ein Text-Emoji — auch dann, wenn eine Datei fehlt. So bleibt die Fläche nie leer, auch nicht beim allerersten Aufruf mit kaltem Cache.
 
 ## Zur Erinnerung um 7 Uhr — was ehrlich möglich ist
 
