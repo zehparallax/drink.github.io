@@ -4,14 +4,6 @@
    nutzen beide "de", unterscheiden sich aber in Flagge, Kürzel und Zahlenformat. */
 
 const REGIONS = [
-  // Deutsch
-  { code: 'de-DE', lang: 'de', flag: '🇩🇪', label: 'DE', country: 'Deutschland' },
-  { code: 'de-AT', lang: 'de', flag: '🇦🇹', label: 'AT', country: 'Österreich' },
-  { code: 'de-CH', lang: 'de', flag: '🇨🇭', label: 'CH', country: 'Schweiz' },
-  { code: 'de-LU', lang: 'de', flag: '🇱🇺', label: 'LU', country: 'Luxemburg' },
-  { code: 'de-LI', lang: 'de', flag: '🇱🇮', label: 'LI', country: 'Liechtenstein' },
-  { code: 'de-BE', lang: 'de', flag: '🇧🇪', label: 'BE', country: 'Belgien' },
-
   // Englisch
   { code: 'en-GB', lang: 'en', flag: '🇬🇧', label: 'GB', country: 'United Kingdom' },
   { code: 'en-US', lang: 'en', flag: '🇺🇸', label: 'US', country: 'United States' },
@@ -23,6 +15,14 @@ const REGIONS = [
   { code: 'en-IN', lang: 'en', flag: '🇮🇳', label: 'IN', country: 'India' },
   { code: 'en-SG', lang: 'en', flag: '🇸🇬', label: 'SG', country: 'Singapore' },
   { code: 'en-NG', lang: 'en', flag: '🇳🇬', label: 'NG', country: 'Nigeria' },
+
+  // Deutsch
+  { code: 'de-DE', lang: 'de', flag: '🇩🇪', label: 'DE', country: 'Deutschland' },
+  { code: 'de-AT', lang: 'de', flag: '🇦🇹', label: 'AT', country: 'Österreich' },
+  { code: 'de-CH', lang: 'de', flag: '🇨🇭', label: 'CH', country: 'Schweiz' },
+  { code: 'de-LU', lang: 'de', flag: '🇱🇺', label: 'LU', country: 'Luxemburg' },
+  { code: 'de-LI', lang: 'de', flag: '🇱🇮', label: 'LI', country: 'Liechtenstein' },
+  { code: 'de-BE', lang: 'de', flag: '🇧🇪', label: 'BE', country: 'Belgien' },
 
   // Französisch
   { code: 'fr-FR', lang: 'fr', flag: '🇫🇷', label: 'FR', country: 'France' },
@@ -106,8 +106,13 @@ const LANG_NAMES = {
   zh: '中文', hi: 'हिन्दी', ja: '日本語', ko: '한국어'
 };
 
-const FALLBACK = 'de-DE';
-const regionOf = code => REGIONS.find(r => r.code === code) || REGIONS[0];
+/* Standard beim allerersten Start: Englisch.
+   Bewusst keine Erkennung über navigator.languages — jeder soll dieselbe
+   Oberfläche sehen und selbst umstellen. I18N.detect() bleibt für den Fall,
+   dass man es doch will. */
+const FALLBACK = 'en-GB';
+const regionOf = code =>
+  REGIONS.find(r => r.code === code) || REGIONS.find(r => r.code === FALLBACK) || REGIONS[0];
 
 const I18N = {
   region: regionOf(FALLBACK),
@@ -135,8 +140,8 @@ const I18N = {
         if (!res.ok) throw new Error(res.status);
         this.packs[r.lang] = await res.json();
       } catch (e) {
-        if (r.lang !== 'de') return this.load(FALLBACK);   // Paket fehlt: zurück auf Deutsch
-        this.packs.de = {};
+        if (r.lang !== 'en') return this.load(FALLBACK);   // Paket fehlt: zurück auf Englisch
+        this.packs.en = {};
       }
     }
     this.region = r;

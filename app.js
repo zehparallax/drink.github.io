@@ -640,7 +640,7 @@ function fillForm() {
 
 /* ---------------- Start ---------------- */
 (async function start() {
-  await I18N.load(S.locale || I18N.detect());
+  await I18N.load(S.locale || FALLBACK);      // Englisch, bis jemand umstellt
   applyLanguage();
   scheduleLocal();
 

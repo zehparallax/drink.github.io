@@ -1,6 +1,6 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v4';
+const CACHE = 'drink-v5';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './i18n.js',

@@ -16,6 +16,10 @@
 
 html{color-scheme:dark}
 *{box-sizing:border-box}
+
+/* Muss über allem stehen: Klassen wie .sheet oder .streak setzen display und
+   würden das hidden-Attribut sonst aushebeln. */
+[hidden]{display:none !important}
 html,body{height:100%}
 body{
   margin:0;
@@ -51,15 +55,16 @@ body{
 /* ---------- Topbar ---------- */
 .topbar{
   position:relative;z-index:2;
-  display:flex;align-items:center;justify-content:space-between;
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;
   gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 4px;
 }
 .wordmark{
   font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.16em;
   text-transform:uppercase;opacity:.85;
+  text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;
 }
 .icon-btn{
-  width:44px;height:44px;border-radius:14px;border:1px solid var(--line);
+  flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);
   background:rgba(232,246,248,.06);color:var(--foam);
   display:grid;place-items:center;cursor:pointer;
 }
@@ -302,9 +307,10 @@ select option{background:#0f2733;color:#e8f6f8}
 }
 
 /* ---------- Sprachknopf oben rechts ---------- */
-.top-right{display:flex;align-items:center;gap:8px}
+.top-right{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;justify-self:end}
 .lang-btn{
-  display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;
+  display:flex;align-items:center;gap:5px;height:44px;padding:0 10px;
+  flex:none;white-space:nowrap;
   border-radius:14px;border:1px solid var(--line);
   background:rgba(232,246,248,.06);color:var(--foam);cursor:pointer;
   font-family:var(--ui);
@@ -394,4 +400,9 @@ select option{background:#0f2733;color:#e8f6f8}
   margin:10px 0 0;padding:13px 16px;border-radius:14px;
   border:1px solid var(--line);background:rgba(53,196,214,.1);
   font-size:14px;line-height:1.5;min-height:48px;
+}
+
+@media (max-width:340px){
+  .wordmark{font-size:0}
+  .lang-btn{padding:0 8px}
 }

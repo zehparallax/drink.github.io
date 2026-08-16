@@ -52,7 +52,7 @@ Einen Ersteinrichtungs-Assistenten gibt es nicht. Die App startet mit 3 Litern a
 
 Der Knopf oben rechts zeigt Flagge und Länderkürzel und öffnet eine durchsuchbare Liste mit 70 Ländern in 19 Sprachen: Deutsch, Englisch, Französisch, Spanisch, Portugiesisch, Italienisch, Niederländisch, Türkisch, Griechisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Tschechisch, Polnisch, Chinesisch, Hindi, Japanisch, Koreanisch.
 
-Länder mit gleicher Sprache sind eigene Einträge — Deutschland, Österreich und die Schweiz teilen sich die Übersetzung, unterscheiden sich aber in Flagge, Kürzel und Zahlenformat. Beim ersten Start wählt die App anhand der Browsersprache vor.
+Länder mit gleicher Sprache sind eigene Einträge — Deutschland, Österreich und die Schweiz teilen sich die Übersetzung, unterscheiden sich aber in Flagge, Kürzel und Zahlenformat. Beim ersten Start ist Englisch eingestellt; die Wahl bleibt danach gespeichert.
 
 Details und Anleitung zum Ergänzen: [SPRACHEN.md](SPRACHEN.md).
 
