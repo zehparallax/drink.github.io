@@ -14,6 +14,10 @@ favicon.ico             Browser-Tab, klassisch
 favicon.svg             Browser-Tab, scharf in jeder Größe
 icons/                  App-Icons 16 – 512, maskable und apple-touch
 emoji/                  eins.png … zehn.png — Platzhalter, einfach überschreiben
+EINRICHTUNG.md          wie der Einrichtungs-Dialog gebaut ist
+SPRACHEN.md             wie das Sprachsystem gebaut ist
+i18n.js                 Sprachmodul: Länderliste, Laden, Formate
+i18n/                   19 Sprachpakete als JSON
 ```
 
 ## Auf GitHub Pages veröffentlichen
@@ -38,9 +42,39 @@ Dann `http://localhost:8080` öffnen. `localhost` gilt als sicherer Kontext, dor
 
 ## Einrichtung
 
-Der Menüpunkt **Einrichtung** zeigt die Installationsanleitung für den Startbildschirm, mit Reitern für iPhone, Android und Rechner. Der passende Reiter ist automatisch vorgewählt, und wo der Browser es erlaubt, steht dort zusätzlich ein direkter Installieren-Knopf.
+Der Menüpunkt **Einrichtung** zeigt die Installationsanleitung für den Startbildschirm, mit Reitern für iPhone, Android und Rechner. Der passende Reiter ist vorgewählt, und wo der Browser es erlaubt, steht dort ein direkter Installieren-Knopf.
 
-Davon getrennt läuft beim allerersten Start ein Assistent in fünf Schritten durch Ziel, Mengen und Erinnerung. Die Erlaubnis für Benachrichtigungen wird im vierten Schritt geholt, also mit einer Nutzeraktion — das verlangen Chrome und Safari. Über *Über & Daten → Ersteinrichtung erneut starten* lässt er sich wiederholen, ohne dass getrunkene Milliliter verloren gehen.
+Wie das programmiert ist und wie man es in ein anderes Projekt übernimmt, steht in [EINRICHTUNG.md](EINRICHTUNG.md).
+
+Einen Ersteinrichtungs-Assistenten gibt es nicht. Die App startet mit 3 Litern als Tagesziel, drei Größen in der Schnellauswahl und einer Erinnerung um 7 Uhr — alles im Menü änderbar.
+
+## Sprache
+
+Der Knopf oben rechts zeigt Flagge und Länderkürzel und öffnet eine durchsuchbare Liste mit 70 Ländern in 19 Sprachen: Deutsch, Englisch, Französisch, Spanisch, Portugiesisch, Italienisch, Niederländisch, Türkisch, Griechisch, Dänisch, Schwedisch, Norwegisch, Finnisch, Tschechisch, Polnisch, Chinesisch, Hindi, Japanisch, Koreanisch.
+
+Länder mit gleicher Sprache sind eigene Einträge — Deutschland, Österreich und die Schweiz teilen sich die Übersetzung, unterscheiden sich aber in Flagge, Kürzel und Zahlenformat. Beim ersten Start wählt die App anhand der Browsersprache vor.
+
+Details und Anleitung zum Ergänzen: [SPRACHEN.md](SPRACHEN.md).
+
+## Kalender und Streak
+
+Im Menü zeigt *Kalender* jeden Monat als Raster. Jeder Tag ist ein Kreis, der von unten so weit mit Wasser gefüllt ist, wie das Tagesziel erreicht wurde; ein Tippen zeigt darunter die genaue Menge. Oben stehen drei Durchschnittswerte: laufender Monat, laufendes Jahr, alle Einträge.
+
+Gemittelt wird über Tage mit Einträgen, nicht über alle Kalendertage — sonst würde die Zeit vor der Installation den Schnitt verfälschen.
+
+Auf dem Startbildschirm steht unten rechts die Serie: die Zahl der Tage in Folge, an denen das Ziel erreicht wurde. Der heutige Tag zählt erst, wenn er geschafft ist, reißt die Serie bis dahin aber nicht ab — sonst stünde sie jeden Vormittag auf null. Wird ein Tag verpasst, beginnt sie von vorn. Ein Tippen öffnet den Kalender.
+
+Für vergangene Tage wird das heutige Ziel zugrunde gelegt, samt Wochentagsaufschlag; frühere Ziele werden nicht mitgespeichert.
+
+## Einheiten
+
+Unter *Einheit* lässt sich die Anzeige umstellen: Milliliter, Liter, Flüssigunzen US oder UK, Cups US. Körpermaße wahlweise in Kilogramm und Zentimeter oder in Pfund und Zoll.
+
+Gespeichert wird intern immer in Milliliter. Ein Wechsel der Einheit rechnet also nur die Anzeige um und lässt bestehende Einträge unangetastet.
+
+## Ziel
+
+Das Tagesziel steht als eigenes Feld ganz oben im Ziel-Bereich. Die Berechnung aus Gewicht, Alter, Größe und Geschlecht darunter ist davon getrennt: Sie zeigt nur eine Empfehlung, und erst der Knopf *Als Tagesziel übernehmen* schreibt sie ins Ziel. Wer sein Ziel selbst setzt, dem verstellt die Berechnung also nichts.
 
 ## Cloudflare Web Analytics
 

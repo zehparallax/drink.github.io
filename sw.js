@@ -1,8 +1,13 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v2';
+const CACHE = 'drink-v4';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
+  './i18n.js',
+  './i18n/de.json', './i18n/en.json', './i18n/fr.json', './i18n/es.json', './i18n/pt.json',
+  './i18n/it.json', './i18n/nl.json', './i18n/tr.json', './i18n/el.json', './i18n/da.json',
+  './i18n/sv.json', './i18n/no.json', './i18n/fi.json', './i18n/cs.json', './i18n/pl.json',
+  './i18n/zh.json', './i18n/hi.json', './i18n/ja.json', './i18n/ko.json',
   './favicon.ico', './favicon.svg',
   './icons/favicon-16.png', './icons/favicon-32.png', './icons/apple-touch-icon.png',
   './icons/icon-96.png', './icons/icon-144.png', './icons/icon-192.png',
@@ -80,9 +85,12 @@ async function notify(force = false) {
   if (!force && !cfg.on) return;
 
   const rest = Math.max(0, (cfg.goal || 2000) - (cfg.have || 0));
-  await self.registration.showNotification('Zeit zu trinken', {
-    body: `${cfg.bar}  ${(cfg.have || 0).toLocaleString('de-DE')} / ${(cfg.goal || 2000).toLocaleString('de-DE')} ml`
-      + (rest ? `\nNoch ${rest.toLocaleString('de-DE')} ml für heute.` : ''),
+  const unit = cfg.unit || 'ml';
+  const have = cfg.haveTxt ?? String(cfg.have || 0);
+  const goal = cfg.goalTxt ?? String(cfg.goal || 2000);
+  await self.registration.showNotification(cfg.title || 'Zeit zu trinken', {
+    body: `${cfg.bar}  ${have} / ${goal} ${unit}`
+      + (rest && cfg.rest ? '\n' + cfg.rest : ''),
     tag: 'drink-daily',
     renotify: false,
     silent: true,          // kein Ton
@@ -92,7 +100,7 @@ async function notify(force = false) {
     icon: './icons/icon-192.png',
     data: { ts: Date.now() },
     actions: (cfg.amounts || [250, 500]).slice(0, 2).map(ml => ({
-      action: 'add-' + ml, title: '+' + ml + ' ml'
+      action: 'add-' + ml, title: '+' + ((cfg.amountLabels || {})[ml] || ml + ' ' + unit)
     }))
   });
 }
