@@ -101,9 +101,11 @@ Der Wassertropfen liegt als `favicon.svg` bei — änderst du den, sollten die P
 | Datei | Zweck |
 |---|---|
 | `favicon.ico`, `favicon.svg`, `icons/favicon-16.png`, `icons/favicon-32.png` | Browser-Tab und Lesezeichen |
-| `icons/apple-touch-icon.png` (180 × 180, randlos) | iPhone-Startbildschirm; iOS rundet die Ecken selbst, das Bild darf keine Transparenz haben |
-| `icons/icon-96 … 512.png` | Android- und Desktop-Installation, App-Umschalter |
-| `icons/maskable-192.png`, `icons/maskable-512.png` | Android schneidet je nach Hersteller Kreis, Rundung oder Tropfenform aus — deshalb 20 % Sicherheitsrand rundherum |
+| `icons/apple-touch-icon-120/152/167/180.png` | iPhone, iPad und iPad Pro; randlos, iOS rundet die Ecken selbst und verträgt keine Transparenz |
+| `icons/icon-48 … 512.png` | Android- und Desktop-Installation, App-Umschalter, Splash-Screen |
+| `icons/maskable-48 … 512.png` | Android schneidet je nach Hersteller Kreis, Squircle oder Tropfen aus — deshalb 20 % Sicherheitsrand rundherum |
+
+Insgesamt 25 Dateien. Die kleinen Größen 16 und 32 stehen bewusst **nicht** im Manifest, nur in den `<link rel="icon">`-Zeilen: Manche Launcher greifen sonst beim Installieren nach dem erstbesten Eintrag und legen ein 16-Pixel-Icon auf den Startbildschirm.
 
 ## Emojis austauschen
 

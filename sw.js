@@ -1,14 +1,19 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v7';
+const CACHE = 'drink-v8';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
   './i18n.js', './languages.js',
   './favicon.ico', './favicon.svg',
   './icons/favicon-16.png', './icons/favicon-32.png', './icons/apple-touch-icon.png',
-  './icons/icon-96.png', './icons/icon-144.png', './icons/icon-192.png',
-  './icons/icon-256.png', './icons/icon-384.png', './icons/icon-512.png',
-  './icons/maskable-192.png', './icons/maskable-512.png',
+  './icons/apple-touch-icon-120.png', './icons/apple-touch-icon-152.png',
+  './icons/apple-touch-icon-167.png', './icons/apple-touch-icon-180.png',
+  './icons/icon-48.png', './icons/maskable-48.png', './icons/icon-72.png',
+  './icons/maskable-72.png', './icons/icon-96.png', './icons/maskable-96.png',
+  './icons/icon-128.png', './icons/maskable-128.png', './icons/icon-144.png',
+  './icons/maskable-144.png', './icons/icon-192.png', './icons/maskable-192.png',
+  './icons/icon-256.png', './icons/maskable-256.png', './icons/icon-384.png',
+  './icons/maskable-384.png', './icons/icon-512.png', './icons/maskable-512.png',
   './emoji/eins.png', './emoji/zwei.png', './emoji/drei.png', './emoji/vier.png',
   './emoji/fuenf.png', './emoji/sechs.png', './emoji/sieben.png', './emoji/acht.png',
   './emoji/neun.png', './emoji/zehn.png'
