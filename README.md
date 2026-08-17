@@ -89,6 +89,17 @@ So kommst du an deinen Token:
 
 Ein Cloudflare-Konto reicht, die Domain muss nicht bei Cloudflare liegen — genau deshalb funktioniert das auf GitHub Pages. Lässt du `TOKEN` stehen, wird nichts gezählt und die App läuft unverändert.
 
+## Wenn das Icon beim Installieren fehlt
+
+Fast immer liegt es daran, dass Android das Manifest nicht lesen kann — dann nimmt der Launcher einen grauen Platzhalter oder den ersten Buchstaben. Der Reihe nach prüfen:
+
+1. **Manifest direkt aufrufen:** `https://deinname.github.io/drink/manifest.json` im Browser öffnen. Erscheint eine 404-Seite, fehlt die Datei oder heißt anders als der Verweis in `index.html`. Beide müssen `manifest.json` sagen.
+2. **Ein Icon direkt aufrufen:** `…/drink/icons/icon-192.png`. Kommt kein Tropfen, wurde der Ordner `icons` nicht mitgeladen.
+3. **Am Rechner prüfen:** Chrome, F12, Reiter *Application → Manifest*. Dort stehen alle Icons mit Vorschau, und Chrome nennt jeden abgelehnten Eintrag samt Grund.
+4. **Neu installieren:** Android tauscht das Icon einer bereits installierten App bei einem Update **nicht** aus, auch nicht nach dem Löschen der Browserdaten. Die App vom Startbildschirm entfernen, unter *Einstellungen → Apps* auch die Reste löschen, dann neu installieren.
+
+Häufigste Stolpersteine im Manifest, alle hier vermieden: eine angegebene Größe, die nicht den echten Pixelmaßen entspricht (Chrome verwirft solche Einträge stillschweigend), fehlende 192 und 512 mit `purpose: "any"`, und transparente Ecken bei den Launcher-Icons.
+
 ## Auf den Startbildschirm legen
 
 - **Android (Chrome):** Menü ⋮ → *App installieren*. Alternativ erscheint im Menü der App unter *Über & Daten* ein Knopf.

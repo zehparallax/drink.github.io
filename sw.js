@@ -1,8 +1,8 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v8';
+const CACHE = 'drink-v9';
 const SHELL = [
-  './', './index.html', './styles.css', './app.js', './manifest.webmanifest',
+  './', './index.html', './styles.css', './app.js', './manifest.json',
   './i18n.js', './languages.js',
   './favicon.ico', './favicon.svg',
   './icons/favicon-16.png', './icons/favicon-32.png', './icons/apple-touch-icon.png',
@@ -51,7 +51,14 @@ self.addEventListener('fetch', e => {
       }
       return res;
     } catch (err) {
-      return (await caches.match('./index.html')) || Response.error();
+      /* Nur beim Seitenaufruf auf die Startseite ausweichen. Täte man das für
+         jede Anfrage, bekäme Android für ein fehlendes Icon die index.html
+         geliefert — eine gültige Antwort mit HTML darin, also ein Icon, das
+         stumm leer bleibt. Ein ehrlicher Fehler ist hier besser. */
+      if (req.mode === 'navigate') {
+        return (await caches.match('./index.html')) || Response.error();
+      }
+      return Response.error();
     }
   })());
 });
