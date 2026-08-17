@@ -1,0 +1,49 @@
+{
+  "name": "Drink",
+  "short_name": "Drink",
+  "description": "Drink enough. Every day.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08161F",
+  "theme_color": "#08161F",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "250 ml eintragen",
+      "url": "./?add=250"
+    },
+    {
+      "name": "500 ml eintragen",
+      "url": "./?add=500"
+    }
+  ],
+  "dir": "ltr"
+}

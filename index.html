@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Drink</title>
+<meta name="description" content="Drink enough. Every day.">
+<!-- Symbol für Browser-Tab, Startbildschirm und Manifest -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="application-name" content="Drink">
+<meta name="theme-color" content="#08161F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Drink">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="glass">
+  <div class="water" id="water" aria-hidden="true">
+    <svg class="wave" viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M0,30 C150,60 300,0 450,30 C600,60 750,0 900,30 C1050,60 1150,10 1200,30 L1200,60 L0,60 Z"/>
+    </svg>
+  </div>
+</div>
+
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" data-i18n-aria="a11y.menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <span class="wordmark">Drink</span>
+  <div class="top-right">
+    <button class="lang-btn" id="langBtn" data-i18n-aria="a11y.lang">
+      <span class="flag" id="langFlag">🇬🇧</span><span class="code" id="langCode">GB</span>
+    </button>
+    <button class="icon-btn" id="shareBtn" data-i18n-aria="a11y.share">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12M12 4l-4 4M12 4l4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="stage">
+
+  <section class="readout" aria-live="polite">
+    <div class="numbers">
+      <span class="have" id="have">0</span>
+      <span class="sep">/</span>
+      <span class="goal" id="goal">3.000</span>
+      <span class="unit" id="unitLabel">ml</span>
+    </div>
+    <div class="bar" role="progressbar" aria-labelledby="barLabel" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+      <div class="bar-fill" id="barFill"></div>
+    </div>
+    <p class="bar-label" id="barLabel"></p>
+  </section>
+
+  <section class="mood">
+    <img id="moodImg" alt="" width="240" height="240" hidden>
+    <span class="mood-fallback" id="moodFallback" aria-hidden="true">😵</span>
+  </section>
+
+  <section class="add">
+    <div class="quick" id="quick"></div>
+    <div class="add-foot">
+      <button class="undo" id="undoBtn" disabled data-i18n="home.undo"></button>
+      <button class="streak" id="streakBtn">
+        <span class="flame" aria-hidden="true">🔥</span>
+        <b id="streakNum">0</b>
+        <span class="streak-label" id="streakLabel"></span>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <h1 data-i18n="menu.title"></h1>
+    <button class="icon-btn" id="closeBtn" data-i18n-aria="a11y.close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+
+  <div class="drawer-body">
+
+    <button class="panel-link" id="guideOpen">
+      <span data-i18n="menu.setup"></span><em id="guideSummary"></em>
+    </button>
+
+    <button class="panel-link" id="calOpen">
+      <span data-i18n="menu.calendar"></span><em id="calSummary"></em>
+    </button>
+
+    <!-- ZIEL -->
+    <details class="panel">
+      <summary><span data-i18n="menu.goal"></span><em id="goalSummary"></em></summary>
+      <div class="panel-body">
+
+        <label class="field">
+          <span data-i18n="goal.day"></span>
+          <span class="input-unit"><input type="number" id="goalManual" inputmode="decimal"><em class="u-vol">ml</em></span>
+        </label>
+
+        <h3 class="sub" data-i18n="goal.calc"></h3>
+        <p class="hint" data-i18n="goal.calcHint"></p>
+        <div class="grid2">
+          <label class="field"><span data-i18n="goal.weight"></span><span class="input-unit"><input type="number" id="pWeight" inputmode="decimal"><em class="u-w">kg</em></span></label>
+          <label class="field"><span data-i18n="goal.age"></span><span class="input-unit"><input type="number" id="pAge" min="10" max="110" step="1" inputmode="numeric"><em data-i18n="goal.ageUnit"></em></span></label>
+          <label class="field"><span data-i18n="goal.height"></span><span class="input-unit"><input type="number" id="pHeight" inputmode="decimal"><em class="u-h">cm</em></span></label>
+          <label class="field"><span data-i18n="goal.sex"></span>
+            <select id="pSex">
+              <option value="w" data-i18n="sex.f"></option>
+              <option value="m" data-i18n="sex.m"></option>
+              <option value="d" data-i18n="sex.x"></option>
+            </select>
+          </label>
+        </div>
+        <p class="calc-out" id="calcOut"></p>
+        <button class="btn ghost" id="applyCalc" data-i18n="goal.apply"></button>
+        <p class="hint" data-i18n="goal.medical"></p>
+
+        <h3 class="sub" data-i18n="goal.extra"></h3>
+        <p class="hint"><span data-i18n="goal.extraHint"></span> <span id="weekdayUnit"></span></p>
+        <div class="weekdays" id="weekdays"></div>
+      </div>
+    </details>
+
+    <!-- MENGEN -->
+    <details class="panel">
+      <summary><span data-i18n="menu.amounts"></span><em id="amountsSummary"></em></summary>
+      <div class="panel-body">
+        <p class="hint" data-i18n="amounts.hint"></p>
+        <div class="chips" id="presetChips"></div>
+        <div class="addown">
+          <span class="input-unit"><input type="number" id="customMl" inputmode="decimal" data-i18n-ph="amounts.custom"><em class="u-vol">ml</em></span>
+          <button class="btn" id="addCustom" data-i18n="amounts.add"></button>
+        </div>
+        <p class="hint" id="amountsHint"></p>
+      </div>
+    </details>
+
+    <!-- EINHEIT -->
+    <details class="panel">
+      <summary><span data-i18n="menu.unit"></span><em id="unitSummary"></em></summary>
+      <div class="panel-body">
+        <label class="field"><span data-i18n="unit.vol"></span>
+          <select id="unitVol">
+            <option value="ml" data-i18n="unit.ml"></option>
+            <option value="l" data-i18n="unit.l"></option>
+            <option value="floz_us" data-i18n="unit.floz_us"></option>
+            <option value="floz_uk" data-i18n="unit.floz_uk"></option>
+            <option value="cup_us" data-i18n="unit.cup_us"></option>
+          </select>
+        </label>
+        <label class="field"><span data-i18n="unit.body"></span>
+          <select id="unitBody">
+            <option value="metric" data-i18n="unit.metric"></option>
+            <option value="imperial" data-i18n="unit.imperial"></option>
+          </select>
+        </label>
+        <p class="hint" data-i18n="unit.hint"></p>
+      </div>
+    </details>
+
+    <!-- ERINNERUNG -->
+    <details class="panel">
+      <summary><span data-i18n="menu.notif"></span><em id="notifSummary"></em></summary>
+      <div class="panel-body">
+        <label class="switch">
+          <input type="checkbox" id="notifOn">
+          <span data-i18n="notif.daily"></span>
+        </label>
+        <label class="field">
+          <span data-i18n="notif.time"></span>
+          <input type="time" id="notifTime" value="07:00">
+        </label>
+        <p class="hint" data-i18n="notif.hint"></p>
+        <button class="btn ghost" id="testNotif" data-i18n="notif.test"></button>
+        <p class="hint" id="notifState"></p>
+      </div>
+    </details>
+
+    <!-- ÜBER -->
+    <details class="panel">
+      <summary><span data-i18n="menu.about"></span><em>v1</em></summary>
+      <div class="panel-body">
+        <p class="hint" data-i18n="about.data"></p>
+        <p class="hint" data-i18n="about.analytics"></p>
+        <button class="btn danger" id="resetBtn" data-i18n="about.reset"></button>
+      </div>
+    </details>
+
+  </div>
+</aside>
+
+<!-- SPRACHWAHL -->
+<div class="sheet" id="langSheet" hidden>
+  <div class="sheet-inner">
+    <div class="sheet-head">
+      <h2 data-i18n="lang.title"></h2>
+      <button class="icon-btn" id="langClose" data-i18n-aria="a11y.close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <input type="search" id="langSearch" class="lang-search" data-i18n-ph="lang.search" autocomplete="off">
+    <div class="lang-list" id="langList"></div>
+  </div>
+</div>
+
+<!-- KALENDER -->
+<div class="setup" id="calendar" hidden>
+  <div class="setup-inner">
+    <div class="cal-head">
+      <h2 data-i18n="menu.calendar"></h2>
+      <button class="icon-btn" id="calClose" data-i18n-aria="a11y.close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="avg-row">
+      <div class="avg"><span data-i18n="cal.avgMonth"></span><b id="avgMonth">–</b></div>
+      <div class="avg"><span data-i18n="cal.avgYear"></span><b id="avgYear">–</b></div>
+      <div class="avg"><span data-i18n="cal.avgAll"></span><b id="avgAll">–</b></div>
+    </div>
+
+    <div class="cal-nav">
+      <button class="icon-btn" id="calPrev" aria-label="◀">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <b id="calTitle"></b>
+      <button class="icon-btn" id="calNext" aria-label="▶">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="cal-wd" id="calWd"></div>
+    <div class="cal-grid" id="calGrid"></div>
+    <p class="cal-detail" id="calDetail"></p>
+
+    <div class="setup-nav">
+      <button class="btn ghost" id="calDone" data-i18n="guide.close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- EINRICHTUNG -->
+<div class="setup" id="guide" hidden>
+  <div class="setup-inner">
+    <section class="step">
+      <h2 data-i18n="guide.title"></h2>
+      <p id="guideIntro"></p>
+
+      <div class="seg" id="guideTabs">
+        <button class="seg-btn" data-os="ios" data-i18n="guide.ios"></button>
+        <button class="seg-btn" data-os="android" data-i18n="guide.android"></button>
+        <button class="seg-btn" data-os="desktop" data-i18n="guide.desktop"></button>
+      </div>
+
+      <ol class="guide-steps" id="guideSteps"></ol>
+      <button class="btn" id="guideInstall" hidden data-i18n="guide.install"></button>
+      <p class="hint" id="guideNote"></p>
+    </section>
+
+    <div class="setup-nav">
+      <button class="btn ghost" id="guideClose" data-i18n="guide.close"></button>
+      <button class="btn" id="guideShare" data-i18n="guide.share"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="languages.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+
+<!-- Cloudflare Web Analytics — Token im Dashboard holen und hier eintragen. -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "b0104e23676648ac8d6184472b5d7d15"}'></script>
+</body>
+</html>
