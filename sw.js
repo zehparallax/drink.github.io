@@ -1,6 +1,6 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v10';
+const CACHE = 'drink-v11';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.json',
   './i18n.js', './languages.js',
@@ -71,10 +71,28 @@ async function writeCfg(obj) {
 
 self.addEventListener('message', e => {
   const d = e.data || {};
-  if (d.type === 'config') e.waitUntil(writeCfg(d.config));
+  if (d.type === 'config') e.waitUntil((async () => {
+    await writeCfg(d.config);              // erst schreiben, dann anzeigen
+    if (d.refresh) await refresh(d.recreate !== false);
+  })());
   if (d.type === 'notify-now') e.waitUntil(notify());
   if (d.type === 'test-notify') e.waitUntil(notify(true));
 });
+
+/* Wurde die Benachrichtigung weggewischt: nach dem nächsten Eintrag erneut
+   zeigen (true) oder bis zum nächsten Morgen in Ruhe lassen (false)? */
+const KEEP_ALIVE = true;
+
+async function refresh(recreate = true) {
+  const cfg = await readCfg();
+  if (!cfg || !cfg.on) return;
+  let offen = [];
+  try {
+    offen = await self.registration.getNotifications({ tag: 'drink-daily' });
+  } catch (e) { /* alter Browser: dann entscheidet allein cfg.fired */ }
+  if (offen.length) return notify(true);              // gleicher tag ersetzt sie lautlos
+  if (recreate && KEEP_ALIVE && cfg.fired) return notify(true);   // heute war sie schon dran
+}
 
 /* ---------- Die Erinnerung selbst ---------- */
 const dayKey = (d = new Date()) =>
@@ -88,9 +106,9 @@ async function notify(force = false) {
   const unit = cfg.unit || 'ml';
   const have = cfg.haveTxt ?? String(cfg.have || 0);
   const goal = cfg.goalTxt ?? String(cfg.goal || 2000);
+  const zweite = rest ? (cfg.rest || '') : (cfg.reached || '');
   await self.registration.showNotification(cfg.title || 'Zeit zu trinken', {
-    body: `${cfg.bar}  ${have} / ${goal} ${unit}`
-      + (rest && cfg.rest ? '\n' + cfg.rest : ''),
+    body: `${cfg.bar}  ${have} / ${goal} ${unit}` + (zweite ? '\n' + zweite : ''),
     tag: 'drink-daily',
     renotify: false,
     silent: true,          // kein Ton

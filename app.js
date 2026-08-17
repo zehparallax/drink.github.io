@@ -532,18 +532,25 @@ const barText = (have, goal) => {
   return '▰'.repeat(f) + '▱'.repeat(10 - f);
 };
 
-async function syncToWorker() {
+/* Der Service Worker kann kein localStorage lesen, bekommt den Stand also
+   zugeschickt. `refresh` heißt: Falls die Benachrichtigung gerade sichtbar ist,
+   ersetze sie durch die aktuelle Fassung — gleicher tag, also an derselben
+   Stelle und ohne neuen Alarm. */
+function syncToWorker(refresh = true, recreate = true) {
   if (!navigator.serviceWorker?.controller) return;
   const goal = goalFor(), have = drunkToday();
+  const rest = Math.max(0, goal - have);
   navigator.serviceWorker.controller.postMessage({
     type: 'config',
+    refresh, recreate,
     config: {
       on: S.notif.on, time: S.notif.time,
       goal, have, bar: barText(have, goal),
       unit: vu().short, goalTxt: volNum(goal), haveTxt: volNum(have),
-      restTxt: volLabel(Math.max(0, goal - have)),
       title: I18N.t('push.title'),
-      rest: I18N.t('push.rest', { v: volLabel(Math.max(0, goal - have)) }),
+      rest: rest ? I18N.t('push.rest', { v: volLabel(rest) }) : '',
+      reached: I18N.t('home.reached'),
+      fired: localStorage.getItem('drink.lastNotify') === todayKey(),
       amounts: S.amounts.slice(0, 3),
       amountLabels: Object.fromEntries(S.amounts.slice(0, 3).map(ml => [ml, volLabel(ml)]))
     }
@@ -671,7 +678,7 @@ function fillForm() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then(async reg => {
       await navigator.serviceWorker.ready;
-      syncToWorker();
+      syncToWorker(true, false);
       try {
         const st = await navigator.permissions?.query({ name: 'periodic-background-sync' });
         if (st?.state === 'granted' && 'periodicSync' in reg) {
@@ -679,7 +686,7 @@ function fillForm() {
         }
       } catch (e) {}
     }).catch(() => {});
-    navigator.serviceWorker.addEventListener('controllerchange', syncToWorker);
+    navigator.serviceWorker.addEventListener('controllerchange', () => syncToWorker(true, false));
   }
 })();
 

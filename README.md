@@ -141,6 +141,18 @@ Die App schickt eine lautlose Benachrichtigung (`silent: true`, keine Vibration)
 
 Eine reine GitHub-Pages-Seite ohne Server kann keine Benachrichtigung garantiert auf die Sekunde um 7 Uhr zustellen — das kann im Web nur Web-Push mit einem Server, der zur richtigen Zeit sendet. iOS unterstützt Periodic Background Sync gar nicht, dort brauchst du diesen Weg.
 
+### Der Balken wächst mit
+
+Die Benachrichtigung wird bei jedem Eintrag ersetzt, nicht gestapelt. Möglich macht das der `tag`: Eine neue Benachrichtigung mit demselben `tag` tritt an die Stelle der alten, und weil `silent: true` und `renotify: false` gesetzt sind, geschieht das ohne Ton, ohne Vibration und ohne erneutes Aufleuchten. Von außen sieht es aus, als würde sich der Balken von selbst füllen.
+
+Die Kette dahinter: `save()` schickt den neuen Stand an den Service Worker, der prüft mit `getNotifications({ tag: 'drink-daily' })`, ob gerade eine sichtbar ist, und zeigt sie bei Bedarf neu. Es bleibt immer bei genau einer.
+
+Wischt man sie weg, kommt sie nach dem nächsten Eintrag zurück. Wer das nicht mag, setzt in `sw.js` oben `KEEP_ALIVE = false` — dann bleibt sie bis zur nächsten Morgen-Erinnerung verschwunden, aktualisiert sich aber weiterhin, solange sie sichtbar ist.
+
+Beim Öffnen der App wird bewusst keine neue erzeugt, nur eine bereits sichtbare aufgefrischt. Sonst würde sie genau in dem Moment auftauchen, in dem man ohnehin auf die App schaut.
+
+Ist das Ziel erreicht, steht in der zweiten Zeile nicht mehr die Restmenge, sondern der Hinweis, dass es geschafft ist.
+
 ### Später auf echten Push umstellen
 
 Nötig sind: ein VAPID-Schlüsselpaar, ein kleiner Dienst (z. B. Cloudflare Worker mit Cron-Trigger oder ein GitHub-Actions-Cron plus Serverless-Funktion), der die Subscriptions speichert und täglich sendet. In der App kommt dazu:
