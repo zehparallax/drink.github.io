@@ -172,6 +172,18 @@
       </div>
     </details>
 
+    <!-- TAGESBEGINN -->
+    <details class="panel">
+      <summary><span data-i18n="menu.dayStart"></span><em id="dayStartSummary"></em></summary>
+      <div class="panel-body">
+        <label class="field">
+          <span data-i18n="dayStart.label"></span>
+          <input type="time" id="dayStart" step="3600" value="04:00">
+        </label>
+        <p class="hint" data-i18n="dayStart.hint"></p>
+      </div>
+    </details>
+
     <!-- ERINNERUNG -->
     <details class="panel">
       <summary><span data-i18n="menu.notif"></span><em id="notifSummary"></em></summary>
@@ -247,7 +259,20 @@
     <div class="cal-grid" id="calGrid"></div>
     <p class="cal-detail" id="calDetail"></p>
 
+    <div class="cal-edit" id="calEdit" hidden>
+      <label class="field">
+        <span data-i18n="cal.editLabel"></span>
+        <span class="input-unit"><input type="number" id="calEditValue" inputmode="decimal"><em class="u-vol">ml</em></span>
+      </label>
+      <div class="cal-edit-row">
+        <button class="btn" id="calSave" data-i18n="allg.save"></button>
+        <button class="btn ghost" id="calCancel" data-i18n="allg.cancel"></button>
+      </div>
+      <p class="hint" data-i18n="cal.editHint"></p>
+    </div>
+
     <div class="setup-nav">
+      <button class="btn ghost" id="calEditOpen" data-i18n="cal.edit"></button>
       <button class="btn ghost" id="calDone" data-i18n="guide.close"></button>
     </div>
   </div>
@@ -286,6 +311,6 @@
 
 <!-- Cloudflare Web Analytics — Token im Dashboard holen und hier eintragen. -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js"
-        data-cf-beacon='{"token": "b0104e23676648ac8d6184472b5d7d15"}'></script>
+        data-cf-beacon='{"token": "TOKEN"}'></script>
 </body>
 </html>

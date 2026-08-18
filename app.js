@@ -14,6 +14,7 @@ const DEFAULTS = {
   asked: false,
   unitVol: 'ml',
   unitBody: 'metric',
+  dayStart: 4,          // Stunde, ab der ein neuer Tag zählt
   locale: null,          // null = noch nie gewählt, dann entscheidet der Browser
   log: {}                // { '2026-08-14': [250, 500, ...] }
 };
@@ -34,8 +35,18 @@ function save() {
   try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
   syncToWorker();
 }
-const dayKey = (d = new Date()) =>
+/* Reines Kalenderdatum, ohne Verschiebung. Für den Kalender, dessen Kästchen
+   echte Kalendertage sind. */
+const dateKey = (d = new Date()) =>
   d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+
+/* Der Trinktag. Wer den Beginn auf 4 Uhr stellt, bucht sein Glas um 1 Uhr
+   nachts noch auf den Vortag — dorthin, wo der Abend hingehört. */
+function dayKey(d = new Date()) {
+  const versetzt = new Date(d.getTime());
+  versetzt.setHours(versetzt.getHours() - (Number(S.dayStart) || 0));
+  return dateKey(versetzt);
+}
 const todayKey = () => dayKey();
 
 /* ---------------- Rechnen ---------------- */
@@ -45,7 +56,10 @@ function baseGoal() {
   return clamp(+S.goalManual || 3000, 200, 8000);
 }
 function goalFor(d = new Date()) {
-  return baseGoal() + (+S.extra[d.getDay()] || 0);
+  /* Über den Schlüssel gehen, damit der Wochentag zum Trinktag passt und nicht
+     zur Uhrzeit: Nachts um 1 gilt noch der Aufschlag des Vortags. */
+  const tag = new Date(dayKey(d) + 'T12:00:00');
+  return baseGoal() + (+S.extra[tag.getDay()] || 0);
 }
 function calcGoal(p) {
   const w = clamp(+p.weight || 70, 20, 250);
@@ -192,11 +206,11 @@ function toast(msg) {
    Der heutige Tag zählt erst mit, wenn er geschafft ist — bis dahin
    bleibt die Serie von gestern stehen, statt vormittags auf 0 zu fallen. */
 function streak() {
-  const d = new Date(); d.setHours(12, 0, 0, 0);
+  const d = new Date(todayKey() + 'T12:00:00');
   let n = 0;
-  if (drunkOn(dayKey(d)) < goalFor(d)) d.setDate(d.getDate() - 1);   // heute noch offen
+  if (drunkOn(dateKey(d)) < goalFor(d)) d.setDate(d.getDate() - 1);   // heute noch offen
   for (let i = 0; i < 3650; i++) {
-    const k = dayKey(d);
+    const k = dateKey(d);
     if (!S.log[k] || drunkOn(k) < goalFor(d)) break;
     n++;
     d.setDate(d.getDate() - 1);
@@ -410,6 +424,15 @@ $('#unitBody').addEventListener('change', e => {
   paintUnits(); fillForm(); paintCalc();
 });
 
+/* ---------------- Tagesbeginn ---------------- */
+$('#dayStart').addEventListener('change', e => {
+  const [h] = (e.target.value || '04:00').split(':').map(Number);
+  S.dayStart = clamp(h || 0, 0, 12);
+  e.target.value = String(S.dayStart).padStart(2, '0') + ':00';
+  save(); render();
+  if (!$('#calendar').hidden) renderCal();
+});
+
 /* ---------------- Kalender ---------------- */
 let calMonth = new Date();
 let calPicked = null;
@@ -417,6 +440,7 @@ let calPicked = null;
 function openCal() {
   calMonth = new Date();
   calPicked = todayKey();
+  $('#calEdit').hidden = true;
   $('#calendar').hidden = false;
   openMenu(false);
   renderCal();
@@ -425,6 +449,29 @@ $('#calOpen').addEventListener('click', openCal);
 $('#calClose').addEventListener('click', () => $('#calendar').hidden = true);
 $('#calDone').addEventListener('click', () => $('#calendar').hidden = true);
 $('#calPrev').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth() - 1); renderCal(); });
+
+/* Alte Tage nachtragen oder berichtigen. Der neue Wert ersetzt den Tag als
+   Ganzes — bei einem Tag, der Wochen zurückliegt, hilft eine Liste einzelner
+   Schlucke niemandem, die Gesamtmenge dagegen schon. */
+$('#calEditOpen').addEventListener('click', () => {
+  if (!calPicked) return;
+  const u = vu();
+  $('#calEditValue').value = Number(fromMl(drunkOn(calPicked)).toFixed(u.dec));
+  $('#calEditValue').step = u.step;
+  $('#calEdit').hidden = false;
+  $('#calEditValue').focus();
+});
+$('#calCancel').addEventListener('click', () => { $('#calEdit').hidden = true; });
+$('#calSave').addEventListener('click', () => {
+  if (!calPicked) return;
+  const ml = clamp(Math.round(toMl(readNum($('#calEditValue')))), 0, 20000);
+  if (ml > 0) S.log[calPicked] = [ml];
+  else delete S.log[calPicked];
+  save();
+  $('#calEdit').hidden = true;
+  renderCal(); render();
+  toast(I18N.t('cal.saved'));
+});
 $('#calNext').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth() + 1); renderCal(); });
 
 /* Durchschnitt über die Tage mit Einträgen — Tage vor der Installation
@@ -462,8 +509,8 @@ function renderCal() {
   for (let i = 0; i < lead; i++) grid.appendChild(document.createElement('span'));
 
   for (let d = 1; d <= days; d++) {
-    const date = new Date(y, m, d);
-    const k = dayKey(date);
+    const date = new Date(y, m, d, 12);
+    const k = dateKey(date);
     const have = drunkOn(k);
     const goal = goalFor(date);
     const pct = goal > 0 ? clamp(have / goal, 0, 1) : 0;
@@ -474,11 +521,12 @@ function renderCal() {
     if (k === calPicked) cell.classList.add('picked');
     if (have >= goal && have > 0) cell.classList.add('full');
     cell.innerHTML = `<span class="fill" style="height:${(pct * 100).toFixed(0)}%"></span><b>${I18N.num(d)}</b>`;
-    cell.addEventListener('click', () => { calPicked = k; renderCal(); });
+    cell.addEventListener('click', () => { calPicked = k; $('#calEdit').hidden = true; renderCal(); });
     grid.appendChild(cell);
   }
 
   const p = calPicked ? new Date(calPicked + 'T12:00:00') : null;
+  $('#calEditOpen').hidden = !p;
   if (!p) { $('#calDetail').textContent = I18N.t('cal.hint'); return; }
   const have = drunkOn(calPicked);
   $('#calDetail').textContent = have === 0
@@ -578,6 +626,7 @@ async function checkDue() {
 function renderSummaries() {
   $('#goalSummary').textContent = volLabel(goalFor());
   $('#amountsSummary').textContent = I18N.t('amounts.summary', { n: S.amounts.length });
+  $('#dayStartSummary').textContent = I18N.t('notif.on', { t: String(S.dayStart).padStart(2, '0') + ':00' });
   $('#notifSummary').textContent = S.notif.on ? I18N.t('notif.on', { t: S.notif.time }) : I18N.t('notif.off');
   $('#guideSummary').textContent = isStandalone() ? I18N.t('menu.setupDone') : I18N.t('menu.setupHome');
 }
@@ -658,6 +707,7 @@ function fillForm() {
   $('#unitBody').value = S.unitBody;
   $('#notifOn').checked = S.notif.on;
   $('#notifTime').value = S.notif.time;
+  $('#dayStart').value = String(S.dayStart).padStart(2, '0') + ':00';
   paintCalc();
 }
 
