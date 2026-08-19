@@ -219,7 +219,15 @@ Fallstricke, die erfahrungsgemäß Zeit kosten:
 
 **Zahlen in Zeichenketten.** `String(3000)` ergibt überall „3000“. Nur `I18N.num(3000)` macht daraus „3.000“, „3,000“ oder „3’000“.
 
-**Fehlende Übersetzung.** Absichtlich wird der Schlüssel selbst zurückgegeben statt eines leeren Feldes. Ein sichtbares „home.left“ auf dem Bildschirm findet man beim Testen sofort, eine leere Zeile übersieht man.
+**Fehlende Übersetzung.** `t()` gibt den Schlüssel selbst zurück, damit man beim Testen sofort sieht, was fehlt. Auf dem Bildschirm landet er trotzdem nicht: `apply()` erkennt diesen Fall und lässt den Text stehen, der im HTML hinterlegt ist.
+
+Deshalb steht in jedem Element mit `data-i18n` der englische Text als Grundzustand:
+
+```html
+<button data-i18n="allg.save">Save</button>
+```
+
+Das ist die Versicherung gegen eine veraltete `languages.js` — etwa wenn die Datei beim Hochladen vergessen wurde oder ein alter Service Worker sie noch festhält. Dann steht dort schlimmstenfalls Englisch statt der gewünschten Sprache, aber nie „allg.save“.
 
 
 ---

@@ -1,6 +1,6 @@
 /* Drink — Service Worker: Offline-Betrieb und die tägliche, lautlose Erinnerung. */
 
-const CACHE = 'drink-v11';
+const CACHE = 'drink-v15';
 const SHELL = [
   './', './index.html', './styles.css', './app.js', './manifest.json',
   './i18n.js', './languages.js',
@@ -76,7 +76,11 @@ self.addEventListener('message', e => {
     if (d.refresh) await refresh(d.recreate !== false);
   })());
   if (d.type === 'notify-now') e.waitUntil(notify());
-  if (d.type === 'test-notify') e.waitUntil(notify(true));
+  if (d.type === 'test-notify') e.waitUntil((async () => {
+    const ergebnis = await notify(true);
+    const quellen = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    quellen.forEach(c => c.postMessage({ type: 'test-ergebnis', ergebnis }));
+  })());
 });
 
 /* Wurde die Benachrichtigung weggewischt: nach dem nächsten Eintrag erneut
@@ -107,12 +111,17 @@ async function notify(force = false) {
   const have = cfg.haveTxt ?? String(cfg.have || 0);
   const goal = cfg.goalTxt ?? String(cfg.goal || 2000);
   const zweite = rest ? (cfg.rest || '') : (cfg.reached || '');
-  await self.registration.showNotification(cfg.title || 'Zeit zu trinken', {
-    body: `${cfg.bar}  ${have} / ${goal} ${unit}` + (zweite ? '\n' + zweite : ''),
+  const titel = cfg.title || 'Zeit zu trinken';
+  const text = `${cfg.bar}  ${have} / ${goal} ${unit}` + (zweite ? '\n' + zweite : '');
+
+  /* Kein `vibrate` — Chrome wirft einen TypeError, sobald `silent: true` und
+     `vibrate` gemeinsam gesetzt sind, und zeigt dann gar nichts an. Lautlos
+     ist bereits durch `silent` erledigt. */
+  const optionen = {
+    body: text,
     tag: 'drink-daily',
     renotify: false,
-    silent: true,          // kein Ton
-    vibrate: [],           // keine Vibration
+    silent: true,
     requireInteraction: false,
     badge: './icon-192.png',
     icon: './icon-192.png',
@@ -120,7 +129,22 @@ async function notify(force = false) {
     actions: (cfg.amounts || [250, 500]).slice(0, 2).map(ml => ({
       action: 'add-' + ml, title: '+' + ((cfg.amountLabels || {})[ml] || ml + ' ' + unit)
     }))
-  });
+  };
+
+  try {
+    await self.registration.showNotification(titel, optionen);
+    return { ok: true };
+  } catch (e) {
+    /* Zweiter Versuch ohne Aktionen und ohne silent: iOS kennt keine Aktionen,
+       ältere Systeme stolpern über einzelne Felder. Lieber eine schlichte
+       Benachrichtigung als gar keine. */
+    try {
+      await self.registration.showNotification(titel, { body: text, tag: 'drink-daily', icon: './icon-192.png' });
+      return { ok: true, einfach: true };
+    } catch (e2) {
+      return { ok: false, fehler: String(e2 && e2.message || e2) };
+    }
+  }
 }
 
 self.addEventListener('notificationclick', e => {

@@ -70,7 +70,7 @@
   <section class="add">
     <div class="quick" id="quick"></div>
     <div class="add-foot">
-      <button class="undo" id="undoBtn" disabled data-i18n="home.undo"></button>
+      <button class="undo" id="undoBtn" disabled data-i18n="home.undo">Undo last sip</button>
       <button class="streak" id="streakBtn">
         <span class="flame" aria-hidden="true">🔥</span>
         <b id="streakNum">0</b>
@@ -85,7 +85,7 @@
 
 <aside class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-head">
-    <h1 data-i18n="menu.title"></h1>
+    <h1 data-i18n="menu.title">Settings</h1>
     <button class="icon-btn" id="closeBtn" data-i18n-aria="a11y.close">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
@@ -94,56 +94,56 @@
   <div class="drawer-body">
 
     <button class="panel-link" id="guideOpen">
-      <span data-i18n="menu.setup"></span><em id="guideSummary"></em>
+      <span data-i18n="menu.setup">Setup</span><em id="guideSummary"></em>
     </button>
 
     <button class="panel-link" id="calOpen">
-      <span data-i18n="menu.calendar"></span><em id="calSummary"></em>
+      <span data-i18n="menu.calendar">Calendar</span><em id="calSummary"></em>
     </button>
 
     <!-- ZIEL -->
     <details class="panel">
-      <summary><span data-i18n="menu.goal"></span><em id="goalSummary"></em></summary>
+      <summary><span data-i18n="menu.goal">Goal</span><em id="goalSummary"></em></summary>
       <div class="panel-body">
 
         <label class="field">
-          <span data-i18n="goal.day"></span>
+          <span data-i18n="goal.day">Daily goal</span>
           <span class="input-unit"><input type="number" id="goalManual" inputmode="decimal"><em class="u-vol">ml</em></span>
         </label>
 
-        <h3 class="sub" data-i18n="goal.calc"></h3>
-        <p class="hint" data-i18n="goal.calcHint"></p>
+        <h3 class="sub" data-i18n="goal.calc">Work it out for me</h3>
+        <p class="hint" data-i18n="goal.calcHint">Just a suggestion. Your goal above stays untouched until you apply it.</p>
         <div class="grid2">
-          <label class="field"><span data-i18n="goal.weight"></span><span class="input-unit"><input type="number" id="pWeight" inputmode="decimal"><em class="u-w">kg</em></span></label>
-          <label class="field"><span data-i18n="goal.age"></span><span class="input-unit"><input type="number" id="pAge" min="10" max="110" step="1" inputmode="numeric"><em data-i18n="goal.ageUnit"></em></span></label>
-          <label class="field"><span data-i18n="goal.height"></span><span class="input-unit"><input type="number" id="pHeight" inputmode="decimal"><em class="u-h">cm</em></span></label>
-          <label class="field"><span data-i18n="goal.sex"></span>
+          <label class="field"><span data-i18n="goal.weight">Weight</span><span class="input-unit"><input type="number" id="pWeight" inputmode="decimal"><em class="u-w">kg</em></span></label>
+          <label class="field"><span data-i18n="goal.age">Age</span><span class="input-unit"><input type="number" id="pAge" min="10" max="110" step="1" inputmode="numeric"><em data-i18n="goal.ageUnit">yrs</em></span></label>
+          <label class="field"><span data-i18n="goal.height">Height</span><span class="input-unit"><input type="number" id="pHeight" inputmode="decimal"><em class="u-h">cm</em></span></label>
+          <label class="field"><span data-i18n="goal.sex">Sex</span>
             <select id="pSex">
-              <option value="w" data-i18n="sex.f"></option>
-              <option value="m" data-i18n="sex.m"></option>
-              <option value="d" data-i18n="sex.x"></option>
+              <option value="w" data-i18n="sex.f">female</option>
+              <option value="m" data-i18n="sex.m">male</option>
+              <option value="d" data-i18n="sex.x">prefer not to say</option>
             </select>
           </label>
         </div>
         <p class="calc-out" id="calcOut"></p>
-        <button class="btn ghost" id="applyCalc" data-i18n="goal.apply"></button>
-        <p class="hint" data-i18n="goal.medical"></p>
+        <button class="btn ghost" id="applyCalc" data-i18n="goal.apply">Use as daily goal</button>
+        <p class="hint" data-i18n="goal.medical">Rule of thumb based on weight and age, height counts a little. A rough guide, not medical advice.</p>
 
-        <h3 class="sub" data-i18n="goal.extra"></h3>
-        <p class="hint"><span data-i18n="goal.extraHint"></span> <span id="weekdayUnit"></span></p>
+        <h3 class="sub" data-i18n="goal.extra">More on certain days</h3>
+        <p class="hint"><span data-i18n="goal.extraHint">Sport on Tuesdays, for instance: extra on top of the daily goal.</span> <span id="weekdayUnit"></span></p>
         <div class="weekdays" id="weekdays"></div>
       </div>
     </details>
 
     <!-- MENGEN -->
     <details class="panel">
-      <summary><span data-i18n="menu.amounts"></span><em id="amountsSummary"></em></summary>
+      <summary><span data-i18n="menu.amounts">Sizes</span><em id="amountsSummary"></em></summary>
       <div class="panel-body">
-        <p class="hint" data-i18n="amounts.hint"></p>
+        <p class="hint" data-i18n="amounts.hint">Pick 1 to 5 sizes for the quick buttons on the home screen.</p>
         <div class="chips" id="presetChips"></div>
         <div class="addown">
           <span class="input-unit"><input type="number" id="customMl" inputmode="decimal" data-i18n-ph="amounts.custom"><em class="u-vol">ml</em></span>
-          <button class="btn" id="addCustom" data-i18n="amounts.add"></button>
+          <button class="btn" id="addCustom" data-i18n="amounts.add">Add</button>
         </div>
         <p class="hint" id="amountsHint"></p>
       </div>
@@ -151,64 +151,64 @@
 
     <!-- EINHEIT -->
     <details class="panel">
-      <summary><span data-i18n="menu.unit"></span><em id="unitSummary"></em></summary>
+      <summary><span data-i18n="menu.unit">Unit</span><em id="unitSummary"></em></summary>
       <div class="panel-body">
-        <label class="field"><span data-i18n="unit.vol"></span>
+        <label class="field"><span data-i18n="unit.vol">Drink volume</span>
           <select id="unitVol">
-            <option value="ml" data-i18n="unit.ml"></option>
-            <option value="l" data-i18n="unit.l"></option>
-            <option value="floz_us" data-i18n="unit.floz_us"></option>
-            <option value="floz_uk" data-i18n="unit.floz_uk"></option>
-            <option value="cup_us" data-i18n="unit.cup_us"></option>
+            <option value="ml" data-i18n="unit.ml">Millilitres — ml</option>
+            <option value="l" data-i18n="unit.l">Litres — l</option>
+            <option value="floz_us" data-i18n="unit.floz_us">Fluid ounces US — fl oz</option>
+            <option value="floz_uk" data-i18n="unit.floz_uk">Fluid ounces UK — fl oz</option>
+            <option value="cup_us" data-i18n="unit.cup_us">Cups US — cup</option>
           </select>
         </label>
-        <label class="field"><span data-i18n="unit.body"></span>
+        <label class="field"><span data-i18n="unit.body">Body measurements</span>
           <select id="unitBody">
-            <option value="metric" data-i18n="unit.metric"></option>
-            <option value="imperial" data-i18n="unit.imperial"></option>
+            <option value="metric" data-i18n="unit.metric">Kilograms and centimetres</option>
+            <option value="imperial" data-i18n="unit.imperial">Pounds and inches</option>
           </select>
         </label>
-        <p class="hint" data-i18n="unit.hint"></p>
+        <p class="hint" data-i18n="unit.hint">Only the display changes. Everything is still stored in millilitres, so your entries stay intact.</p>
       </div>
     </details>
 
     <!-- TAGESBEGINN -->
     <details class="panel">
-      <summary><span data-i18n="menu.dayStart"></span><em id="dayStartSummary"></em></summary>
+      <summary><span data-i18n="menu.dayStart">Day starts at</span><em id="dayStartSummary"></em></summary>
       <div class="panel-body">
         <label class="field">
-          <span data-i18n="dayStart.label"></span>
+          <span data-i18n="dayStart.label">A new day begins at</span>
           <input type="time" id="dayStart" step="3600" value="04:00">
         </label>
-        <p class="hint" data-i18n="dayStart.hint"></p>
+        <p class="hint" data-i18n="dayStart.hint">Anything you drink after midnight still counts towards the previous day until this time. So the glass at 1 a.m. belongs to the evening before.</p>
       </div>
     </details>
 
     <!-- ERINNERUNG -->
     <details class="panel">
-      <summary><span data-i18n="menu.notif"></span><em id="notifSummary"></em></summary>
+      <summary><span data-i18n="menu.notif">Reminder</span><em id="notifSummary"></em></summary>
       <div class="panel-body">
         <label class="switch">
           <input type="checkbox" id="notifOn">
-          <span data-i18n="notif.daily"></span>
+          <span data-i18n="notif.daily">Daily reminder</span>
         </label>
         <label class="field">
-          <span data-i18n="notif.time"></span>
+          <span data-i18n="notif.time">Time</span>
           <input type="time" id="notifTime" value="07:00">
         </label>
-        <p class="hint" data-i18n="notif.hint"></p>
-        <button class="btn ghost" id="testNotif" data-i18n="notif.test"></button>
+        <p class="hint" data-i18n="notif.hint">Arrives silently, no sound and no vibration, showing your still empty bar.</p>
+        <button class="btn ghost" id="testNotif" data-i18n="notif.test">Test the reminder now</button>
         <p class="hint" id="notifState"></p>
       </div>
     </details>
 
     <!-- ÜBER -->
     <details class="panel">
-      <summary><span data-i18n="menu.about"></span><em>v1</em></summary>
+      <summary><span data-i18n="menu.about">About & data</span><em>v1</em></summary>
       <div class="panel-body">
-        <p class="hint" data-i18n="about.data"></p>
-        <p class="hint" data-i18n="about.analytics"></p>
-        <button class="btn danger" id="resetBtn" data-i18n="about.reset"></button>
+        <p class="hint" data-i18n="about.data">Goal, sizes and everything you drink stay on your device. No account, no sign-in.</p>
+        <p class="hint" data-i18n="about.analytics">Cloudflare Web Analytics counts anonymous page views, no cookies.</p>
+        <button class="btn danger" id="resetBtn" data-i18n="about.reset">Delete all data</button>
       </div>
     </details>
 
@@ -219,7 +219,7 @@
 <div class="sheet" id="langSheet" hidden>
   <div class="sheet-inner">
     <div class="sheet-head">
-      <h2 data-i18n="lang.title"></h2>
+      <h2 data-i18n="lang.title">Language</h2>
       <button class="icon-btn" id="langClose" data-i18n-aria="a11y.close">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
@@ -233,16 +233,16 @@
 <div class="setup" id="calendar" hidden>
   <div class="setup-inner">
     <div class="cal-head">
-      <h2 data-i18n="menu.calendar"></h2>
+      <h2 data-i18n="menu.calendar">Calendar</h2>
       <button class="icon-btn" id="calClose" data-i18n-aria="a11y.close">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
     </div>
 
     <div class="avg-row">
-      <div class="avg"><span data-i18n="cal.avgMonth"></span><b id="avgMonth">–</b></div>
-      <div class="avg"><span data-i18n="cal.avgYear"></span><b id="avgYear">–</b></div>
-      <div class="avg"><span data-i18n="cal.avgAll"></span><b id="avgAll">–</b></div>
+      <div class="avg"><span data-i18n="cal.avgMonth">Month</span><b id="avgMonth">–</b></div>
+      <div class="avg"><span data-i18n="cal.avgYear">Year</span><b id="avgYear">–</b></div>
+      <div class="avg"><span data-i18n="cal.avgAll">All time</span><b id="avgAll">–</b></div>
     </div>
 
     <div class="cal-nav">
@@ -261,19 +261,19 @@
 
     <div class="cal-edit" id="calEdit" hidden>
       <label class="field">
-        <span data-i18n="cal.editLabel"></span>
+        <span data-i18n="cal.editLabel">Drunk on this day</span>
         <span class="input-unit"><input type="number" id="calEditValue" inputmode="decimal"><em class="u-vol">ml</em></span>
       </label>
       <div class="cal-edit-row">
-        <button class="btn" id="calSave" data-i18n="allg.save"></button>
-        <button class="btn ghost" id="calCancel" data-i18n="allg.cancel"></button>
+        <button class="btn" id="calSave" data-i18n="allg.save">Save</button>
+        <button class="btn ghost" id="calCancel" data-i18n="allg.cancel">Cancel</button>
       </div>
-      <p class="hint" data-i18n="cal.editHint"></p>
+      <p class="hint" data-i18n="cal.editHint">Replaces the whole day with this amount.</p>
     </div>
 
     <div class="setup-nav">
-      <button class="btn ghost" id="calEditOpen" data-i18n="cal.edit"></button>
-      <button class="btn ghost" id="calDone" data-i18n="guide.close"></button>
+      <button class="btn ghost" id="calEditOpen" data-i18n="cal.edit">Edit this day</button>
+      <button class="btn ghost" id="calDone" data-i18n="guide.close">Close</button>
     </div>
   </div>
 </div>
@@ -282,23 +282,23 @@
 <div class="setup" id="guide" hidden>
   <div class="setup-inner">
     <section class="step">
-      <h2 data-i18n="guide.title"></h2>
+      <h2 data-i18n="guide.title">Setup</h2>
       <p id="guideIntro"></p>
 
       <div class="seg" id="guideTabs">
-        <button class="seg-btn" data-os="ios" data-i18n="guide.ios"></button>
-        <button class="seg-btn" data-os="android" data-i18n="guide.android"></button>
-        <button class="seg-btn" data-os="desktop" data-i18n="guide.desktop"></button>
+        <button class="seg-btn" data-os="ios" data-i18n="guide.ios">iPhone</button>
+        <button class="seg-btn" data-os="android" data-i18n="guide.android">Android</button>
+        <button class="seg-btn" data-os="desktop" data-i18n="guide.desktop">Computer</button>
       </div>
 
       <ol class="guide-steps" id="guideSteps"></ol>
-      <button class="btn" id="guideInstall" hidden data-i18n="guide.install"></button>
+      <button class="btn" id="guideInstall" hidden data-i18n="guide.install">Install now</button>
       <p class="hint" id="guideNote"></p>
     </section>
 
     <div class="setup-nav">
-      <button class="btn ghost" id="guideClose" data-i18n="guide.close"></button>
-      <button class="btn" id="guideShare" data-i18n="guide.share"></button>
+      <button class="btn ghost" id="guideClose" data-i18n="guide.close">Close</button>
+      <button class="btn" id="guideShare" data-i18n="guide.share">Share app</button>
     </div>
   </div>
 </div>

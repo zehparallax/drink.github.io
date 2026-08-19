@@ -139,18 +139,40 @@ const I18N = {
     return r;
   },
 
-  /* t('home.left', { v: '500 ml' }) — Platzhalter in geschweiften Klammern */
+  /* t('home.left', { v: '500 ml' }) — Platzhalter in geschweiften Klammern.
+
+     Fehlt ein Schlüssel, wird der Reihe nach ausgewichen: gewählte Sprache,
+     Englisch, Deutsch. Erst wenn auch das nichts hergibt, wird aus dem
+     Schlüssel ein lesbares Wort gemacht — „menu.dayStart" wird zu „Day Start".
+     Ein roher Punkt-Schlüssel soll nie auf dem Bildschirm landen. */
   t(key, vars) {
     let s = this.dict[key];
-    if (s === undefined) s = (I18N_PACKS.en || {})[key];   // Rückfall auf Englisch
-    if (s === undefined) s = key;
+    if (s === undefined) s = (I18N_PACKS.en || {})[key];
+    if (s === undefined) s = (I18N_PACKS.de || {})[key];
+    if (s === undefined) {
+      if (!this.vermisst.has(key)) {
+        this.vermisst.add(key);
+        console.warn('[i18n] Schlüssel fehlt in languages.js:', key);
+      }
+      s = key.split('.').pop()
+        .replace(/([a-z])([A-Z])/g, '$1 $2')
+        .replace(/^./, c => c.toUpperCase());
+    }
     if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]);
     return s;
   },
 
+  vermisst: new Set(),
+
   /* Alle Knoten mit data-i18n neu beschriften */
   apply(root = document) {
-    root.querySelectorAll('[data-i18n]').forEach(e => e.textContent = I18N.t(e.dataset.i18n));
+    /* Gibt t() den Schlüssel selbst zurück, kennt ihn keine Sprache. Dann bleibt
+       der im HTML hinterlegte Text stehen, statt „cal.save“ auf den Knopf zu
+       schreiben. So übersteht die App auch eine veraltete languages.js. */
+    root.querySelectorAll('[data-i18n]').forEach(e => {
+      const wert = I18N.t(e.dataset.i18n);
+      if (wert !== e.dataset.i18n) e.textContent = wert;
+    });
     root.querySelectorAll('[data-i18n-aria]').forEach(e => e.setAttribute('aria-label', I18N.t(e.dataset.i18nAria)));
     root.querySelectorAll('[data-i18n-ph]').forEach(e => e.placeholder = I18N.t(e.dataset.i18nPh));
   },

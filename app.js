@@ -713,6 +713,12 @@ function fillForm() {
 
 /* ---------------- Start ---------------- */
 (async function start() {
+  /* Stimmt der Stand der Sprachdatei? Wurde nur ein Teil der Dateien
+     hochgeladen, sieht man sonst nur rohe Schlüssel und rätselt lange. */
+  if (typeof LANG_VERSION === 'undefined' || LANG_VERSION < 2) {
+    console.warn('[Drink] languages.js ist veraltet — bitte die Datei neu hochladen.');
+  }
+
   I18N.load(S.locale || FALLBACK);            // Englisch, bis jemand umstellt
   applyLanguage();
   scheduleLocal();

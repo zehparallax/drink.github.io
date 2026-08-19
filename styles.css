@@ -427,3 +427,16 @@ select option{background:#0f2733;color:#e8f6f8}
   .wordmark{font-size:0}
   .lang-btn{padding:0 8px}
 }
+
+/* ---------- Kalender bearbeiten ---------- */
+.cal-edit {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(53,196,214,.08);
+  display: grid;
+  gap: 10px;
+}
+.cal-edit-row { display: flex; gap: 8px; }
+.cal-edit-row .btn { flex: 1; }

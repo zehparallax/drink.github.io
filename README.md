@@ -127,9 +127,24 @@ Ersetze die zehn PNGs in `emoji/` durch eigene, gleiche Dateinamen behalten:
 
 `eins.png` = am schlechtesten (0 % getrunken) … `zehn.png` = am besten (Ziel erreicht).
 
-Quadratisch, am besten 512 × 512 px mit transparentem Hintergrund.
+Quadratisch, am besten 512 × 512 px mit transparentem Hintergrund. Die mitgelieferten Gesichter sind Wassertropfen mit den Mienen der bekannten Emoji — von 😵 über 😐 bis 🤩. Die Kontur entsteht aus einem Kreis, an den zwei Tangenten zur Spitze laufen; deshalb hat sie keinen Knick. `emojis_erzeugen.py` erzeugt sie neu:
+
+```bash
+pip install pillow
+python3 emojis_erzeugen.py
+```
 
 Bis ein Bild geladen ist, steht an seiner Stelle ein Text-Emoji — auch dann, wenn eine Datei fehlt. So bleibt die Fläche nie leer, auch nicht beim allerersten Aufruf mit kaltem Cache.
+
+## Tagesbeginn
+
+Im Menü lässt sich einstellen, wann für dich ein neuer Tag beginnt; Standard ist 4 Uhr morgens. Bis dahin zählt alles noch zum Vortag — das Glas um 1 Uhr nachts gehört zum Abend davor, nicht zum nächsten Morgen. Auch der Wochentagsaufschlag richtet sich danach: Wer dienstags Sport hat, behält sein höheres Ziel bis 4 Uhr in der Nacht zum Mittwoch.
+
+Der Kalender zeigt weiterhin echte Kalendertage. Nur die Zuordnung beim Eintragen verschiebt sich.
+
+## Tage nachträglich bearbeiten
+
+Im Kalender einen Tag antippen, dann unten auf *Tag bearbeiten*. Der eingetragene Wert ersetzt den Tag als Ganzes. Das ist Absicht: Bei einem Tag, der Wochen zurückliegt, hilft eine Liste einzelner Schlucke niemandem, die Gesamtmenge dagegen schon. Ein Wert von 0 löscht den Tag.
 
 ## Zur Erinnerung um 7 Uhr — was ehrlich möglich ist
 

@@ -7,8 +7,19 @@
    Doppelpunkt ersetzen. Die Schlüssel links und die Platzhalter in
    geschweiften Klammern müssen unverändert bleiben. */
 
+const LANG_VERSION = 2;   // hochzählen, wenn Schlüssel dazukommen
+
 const I18N_PACKS = {
 "en": {
+  "menu.dayStart": "Day starts at",
+  "dayStart.label": "A new day begins at",
+  "dayStart.hint": "Anything you drink after midnight still counts towards the previous day until this time. So the glass at 1 a.m. belongs to the evening before.",
+  "cal.edit": "Edit this day",
+  "cal.editLabel": "Drunk on this day",
+  "cal.editHint": "Replaces the whole day with this amount.",
+  "cal.saved": "Saved",
+  "allg.save": "Save",
+  "allg.cancel": "Cancel",
   "a11y.menu": "Open menu",
   "a11y.share": "Share app",
   "a11y.lang": "Choose language",
@@ -127,6 +138,15 @@ const I18N_PACKS = {
   "share.text": "Drink — the app that makes sure you drink enough."
 },
 "de": {
+  "menu.dayStart": "Tagesbeginn",
+  "dayStart.label": "Der Tag beginnt um",
+  "dayStart.hint": "Was du nach Mitternacht trinkst, zählt bis zu dieser Uhrzeit noch zum Vortag. So gehört das Glas um 1 Uhr nachts zum Abend davor.",
+  "cal.edit": "Tag bearbeiten",
+  "cal.editLabel": "An diesem Tag getrunken",
+  "cal.editHint": "Ersetzt den ganzen Tag durch diesen Wert.",
+  "cal.saved": "Gespeichert",
+  "allg.save": "Speichern",
+  "allg.cancel": "Abbrechen",
   "a11y.menu": "Menü öffnen",
   "a11y.share": "App teilen",
   "a11y.lang": "Sprache wählen",
@@ -245,6 +265,15 @@ const I18N_PACKS = {
   "share.text": "Drink — die App, die dafür sorgt, dass du genug trinkst."
 },
 "fr": {
+  "menu.dayStart": "Début de journée",
+  "dayStart.label": "La journée commence à",
+  "dayStart.hint": "Ce que vous buvez après minuit compte encore pour la veille jusqu'à cette heure. Le verre de 1 h appartient donc à la soirée précédente.",
+  "cal.edit": "Modifier ce jour",
+  "cal.editLabel": "Bu ce jour-là",
+  "cal.editHint": "Remplace toute la journée par cette quantité.",
+  "cal.saved": "Enregistré",
+  "allg.save": "Enregistrer",
+  "allg.cancel": "Annuler",
   "a11y.menu": "Ouvrir le menu",
   "a11y.share": "Partager l'application",
   "a11y.lang": "Choisir la langue",
@@ -363,6 +392,15 @@ const I18N_PACKS = {
   "share.text": "Drink — l'application qui veille à ce que vous buviez assez."
 },
 "es": {
+  "menu.dayStart": "Inicio del día",
+  "dayStart.label": "El día empieza a las",
+  "dayStart.hint": "Lo que bebas después de medianoche cuenta para el día anterior hasta esta hora. Así el vaso de la 1 pertenece a la noche anterior.",
+  "cal.edit": "Editar este día",
+  "cal.editLabel": "Bebido ese día",
+  "cal.editHint": "Sustituye todo el día por esta cantidad.",
+  "cal.saved": "Guardado",
+  "allg.save": "Guardar",
+  "allg.cancel": "Cancelar",
   "a11y.menu": "Abrir el menú",
   "a11y.share": "Compartir la app",
   "a11y.lang": "Elegir idioma",
@@ -481,6 +519,15 @@ const I18N_PACKS = {
   "share.text": "Drink — la app que se asegura de que bebas suficiente."
 },
 "pt": {
+  "menu.dayStart": "Início do dia",
+  "dayStart.label": "O dia começa às",
+  "dayStart.hint": "O que beberes depois da meia-noite conta ainda para o dia anterior até esta hora. O copo da 1 h pertence assim à noite anterior.",
+  "cal.edit": "Editar este dia",
+  "cal.editLabel": "Bebido nesse dia",
+  "cal.editHint": "Substitui o dia inteiro por este valor.",
+  "cal.saved": "Guardado",
+  "allg.save": "Guardar",
+  "allg.cancel": "Cancelar",
   "a11y.menu": "Abrir o menu",
   "a11y.share": "Partilhar a aplicação",
   "a11y.lang": "Escolher idioma",
@@ -599,6 +646,15 @@ const I18N_PACKS = {
   "share.text": "Drink — a aplicação que garante que bebes o suficiente."
 },
 "it": {
+  "menu.dayStart": "Inizio giornata",
+  "dayStart.label": "La giornata inizia alle",
+  "dayStart.hint": "Quel che bevi dopo mezzanotte conta ancora per il giorno prima fino a quest'ora. Così il bicchiere all'una appartiene alla sera precedente.",
+  "cal.edit": "Modifica il giorno",
+  "cal.editLabel": "Bevuto quel giorno",
+  "cal.editHint": "Sostituisce l'intera giornata con questo valore.",
+  "cal.saved": "Salvato",
+  "allg.save": "Salva",
+  "allg.cancel": "Annulla",
   "a11y.menu": "Apri il menu",
   "a11y.share": "Condividi l'app",
   "a11y.lang": "Scegli la lingua",
@@ -717,6 +773,15 @@ const I18N_PACKS = {
   "share.text": "Drink — l'app che ti fa bere abbastanza."
 },
 "nl": {
+  "menu.dayStart": "Dagstart",
+  "dayStart.label": "De dag begint om",
+  "dayStart.hint": "Wat je na middernacht drinkt telt tot dit tijdstip nog bij de vorige dag. Het glas om 1 uur hoort zo bij de avond ervoor.",
+  "cal.edit": "Dag bewerken",
+  "cal.editLabel": "Die dag gedronken",
+  "cal.editHint": "Vervangt de hele dag door dit bedrag.",
+  "cal.saved": "Opgeslagen",
+  "allg.save": "Opslaan",
+  "allg.cancel": "Annuleren",
   "a11y.menu": "Menu openen",
   "a11y.share": "App delen",
   "a11y.lang": "Taal kiezen",
@@ -835,6 +900,15 @@ const I18N_PACKS = {
   "share.text": "Drink — de app die zorgt dat je genoeg drinkt."
 },
 "tr": {
+  "menu.dayStart": "Gün başlangıcı",
+  "dayStart.label": "Gün şu saatte başlar",
+  "dayStart.hint": "Gece yarısından sonra içtiklerin bu saate kadar hâlâ önceki güne sayılır. Böylece gece 1'deki bardak önceki akşama ait olur.",
+  "cal.edit": "Bu günü düzenle",
+  "cal.editLabel": "O gün içilen",
+  "cal.editHint": "Tüm günü bu değerle değiştirir.",
+  "cal.saved": "Kaydedildi",
+  "allg.save": "Kaydet",
+  "allg.cancel": "Vazgeç",
   "a11y.menu": "Menüyü aç",
   "a11y.share": "Uygulamayı paylaş",
   "a11y.lang": "Dil seç",
@@ -953,6 +1027,15 @@ const I18N_PACKS = {
   "share.text": "Drink — yeterince su içmeni sağlayan uygulama."
 },
 "el": {
+  "menu.dayStart": "Έναρξη ημέρας",
+  "dayStart.label": "Η ημέρα ξεκινά στις",
+  "dayStart.hint": "Ό,τι πίνεις μετά τα μεσάνυχτα μετρά ακόμη στην προηγούμενη ημέρα ως αυτή την ώρα. Έτσι το ποτήρι στη 1 ανήκει στο προηγούμενο βράδυ.",
+  "cal.edit": "Επεξεργασία ημέρας",
+  "cal.editLabel": "Ήπιες εκείνη την ημέρα",
+  "cal.editHint": "Αντικαθιστά όλη την ημέρα με αυτή την τιμή.",
+  "cal.saved": "Αποθηκεύτηκε",
+  "allg.save": "Αποθήκευση",
+  "allg.cancel": "Άκυρο",
   "a11y.menu": "Άνοιγμα μενού",
   "a11y.share": "Κοινοποίηση",
   "a11y.lang": "Επιλογή γλώσσας",
@@ -1071,6 +1154,15 @@ const I18N_PACKS = {
   "share.text": "Drink — η εφαρμογή που φροντίζει να πίνεις αρκετά."
 },
 "da": {
+  "menu.dayStart": "Dagens start",
+  "dayStart.label": "Dagen begynder kl.",
+  "dayStart.hint": "Det du drikker efter midnat tæller stadig med til dagen før indtil dette tidspunkt. Glasset kl. 1 hører altså til aftenen inden.",
+  "cal.edit": "Rediger dagen",
+  "cal.editLabel": "Drukket den dag",
+  "cal.editHint": "Erstatter hele dagen med denne mængde.",
+  "cal.saved": "Gemt",
+  "allg.save": "Gem",
+  "allg.cancel": "Annuller",
   "a11y.menu": "Åbn menu",
   "a11y.share": "Del appen",
   "a11y.lang": "Vælg sprog",
@@ -1189,6 +1281,15 @@ const I18N_PACKS = {
   "share.text": "Drink — appen der sørger for, at du drikker nok."
 },
 "sv": {
+  "menu.dayStart": "Dygnets start",
+  "dayStart.label": "Dygnet börjar kl.",
+  "dayStart.hint": "Det du dricker efter midnatt räknas till dagen innan fram till den här tiden. Glaset kl. 1 hör alltså till kvällen innan.",
+  "cal.edit": "Redigera dagen",
+  "cal.editLabel": "Drack den dagen",
+  "cal.editHint": "Ersätter hela dagen med den här mängden.",
+  "cal.saved": "Sparat",
+  "allg.save": "Spara",
+  "allg.cancel": "Avbryt",
   "a11y.menu": "Öppna menyn",
   "a11y.share": "Dela appen",
   "a11y.lang": "Välj språk",
@@ -1307,6 +1408,15 @@ const I18N_PACKS = {
   "share.text": "Drink — appen som ser till att du dricker tillräckligt."
 },
 "no": {
+  "menu.dayStart": "Døgnets start",
+  "dayStart.label": "Døgnet begynner kl.",
+  "dayStart.hint": "Det du drikker etter midnatt teller fortsatt til dagen før fram til dette tidspunktet. Glasset kl. 1 hører altså til kvelden før.",
+  "cal.edit": "Rediger dagen",
+  "cal.editLabel": "Drakk den dagen",
+  "cal.editHint": "Erstatter hele dagen med denne mengden.",
+  "cal.saved": "Lagret",
+  "allg.save": "Lagre",
+  "allg.cancel": "Avbryt",
   "a11y.menu": "Åpne menyen",
   "a11y.share": "Del appen",
   "a11y.lang": "Velg språk",
@@ -1425,6 +1535,15 @@ const I18N_PACKS = {
   "share.text": "Drink — appen som sørger for at du drikker nok."
 },
 "fi": {
+  "menu.dayStart": "Vuorokauden alku",
+  "dayStart.label": "Vuorokausi alkaa klo",
+  "dayStart.hint": "Keskiyön jälkeen juotu lasketaan vielä edelliselle päivälle tähän kellonaikaan asti. Lasi kello 1 kuuluu siis edelliseen iltaan.",
+  "cal.edit": "Muokkaa päivää",
+  "cal.editLabel": "Juotu sinä päivänä",
+  "cal.editHint": "Korvaa koko päivän tällä määrällä.",
+  "cal.saved": "Tallennettu",
+  "allg.save": "Tallenna",
+  "allg.cancel": "Peruuta",
   "a11y.menu": "Avaa valikko",
   "a11y.share": "Jaa sovellus",
   "a11y.lang": "Valitse kieli",
@@ -1543,6 +1662,15 @@ const I18N_PACKS = {
   "share.text": "Drink — sovellus, joka pitää huolen että juot tarpeeksi."
 },
 "cs": {
+  "menu.dayStart": "Začátek dne",
+  "dayStart.label": "Den začíná v",
+  "dayStart.hint": "Co vypiješ po půlnoci, počítá se do této hodiny ještě k předchozímu dni. Sklenice v 1 ráno tak patří k předešlému večeru.",
+  "cal.edit": "Upravit den",
+  "cal.editLabel": "Vypito ten den",
+  "cal.editHint": "Nahradí celý den touto hodnotou.",
+  "cal.saved": "Uloženo",
+  "allg.save": "Uložit",
+  "allg.cancel": "Zrušit",
   "a11y.menu": "Otevřít nabídku",
   "a11y.share": "Sdílet aplikaci",
   "a11y.lang": "Vybrat jazyk",
@@ -1661,6 +1789,15 @@ const I18N_PACKS = {
   "share.text": "Drink — aplikace, která hlídá, abys pil dost."
 },
 "pl": {
+  "menu.dayStart": "Początek dnia",
+  "dayStart.label": "Dzień zaczyna się o",
+  "dayStart.hint": "To, co wypijesz po północy, liczy się do tej godziny jeszcze do dnia poprzedniego. Szklanka o 1 w nocy należy więc do poprzedniego wieczoru.",
+  "cal.edit": "Edytuj dzień",
+  "cal.editLabel": "Wypite tego dnia",
+  "cal.editHint": "Zastępuje cały dzień tą wartością.",
+  "cal.saved": "Zapisano",
+  "allg.save": "Zapisz",
+  "allg.cancel": "Anuluj",
   "a11y.menu": "Otwórz menu",
   "a11y.share": "Udostępnij aplikację",
   "a11y.lang": "Wybierz język",
@@ -1779,6 +1916,15 @@ const I18N_PACKS = {
   "share.text": "Drink — aplikacja, która pilnuje, żebyś pił wystarczająco."
 },
 "zh": {
+  "menu.dayStart": "一天的开始",
+  "dayStart.label": "新的一天开始于",
+  "dayStart.hint": "午夜之后喝的水，在此时刻之前仍算作前一天。凌晨一点的那杯，因此归入前一晚。",
+  "cal.edit": "编辑这一天",
+  "cal.editLabel": "这天喝了",
+  "cal.editHint": "用该数值替换这一整天。",
+  "cal.saved": "已保存",
+  "allg.save": "保存",
+  "allg.cancel": "取消",
   "a11y.menu": "打开菜单",
   "a11y.share": "分享应用",
   "a11y.lang": "选择语言",
@@ -1897,6 +2043,15 @@ const I18N_PACKS = {
   "share.text": "Drink — 督促你喝够水的应用。"
 },
 "hi": {
+  "menu.dayStart": "दिन की शुरुआत",
+  "dayStart.label": "दिन शुरू होता है",
+  "dayStart.hint": "आधी रात के बाद जो पिया, वह इस समय तक पिछले दिन में ही गिना जाता है। इसलिए रात एक बजे का गिलास पिछली शाम का हुआ।",
+  "cal.edit": "यह दिन बदलें",
+  "cal.editLabel": "उस दिन पिया",
+  "cal.editHint": "पूरे दिन को इस मात्रा से बदल देता है।",
+  "cal.saved": "सहेजा गया",
+  "allg.save": "सहेजें",
+  "allg.cancel": "रद्द करें",
   "a11y.menu": "मेन्यू खोलें",
   "a11y.share": "ऐप साझा करें",
   "a11y.lang": "भाषा चुनें",
@@ -2015,6 +2170,15 @@ const I18N_PACKS = {
   "share.text": "Drink — वह ऐप जो आपको पर्याप्त पानी पिलाती है।"
 },
 "ja": {
+  "menu.dayStart": "一日の始まり",
+  "dayStart.label": "一日が始まる時刻",
+  "dayStart.hint": "深夜に飲んだぶんは、この時刻までなら前日として数えます。午前1時の一杯は前の晩のものになります。",
+  "cal.edit": "この日を編集",
+  "cal.editLabel": "この日に飲んだ量",
+  "cal.editHint": "その日ぜんぶをこの量で置き換えます。",
+  "cal.saved": "保存しました",
+  "allg.save": "保存",
+  "allg.cancel": "キャンセル",
   "a11y.menu": "メニューを開く",
   "a11y.share": "アプリを共有",
   "a11y.lang": "言語を選ぶ",
@@ -2133,6 +2297,15 @@ const I18N_PACKS = {
   "share.text": "Drink — きちんと水分をとるためのアプリ。"
 },
 "ko": {
+  "menu.dayStart": "하루 시작",
+  "dayStart.label": "하루가 시작되는 시각",
+  "dayStart.hint": "자정이 지나 마신 물도 이 시각까지는 전날로 칩니다. 새벽 1시의 한 잔은 그 전날 저녁에 속합니다.",
+  "cal.edit": "이 날 수정",
+  "cal.editLabel": "그날 마신 양",
+  "cal.editHint": "그날 전체를 이 값으로 바꿉니다.",
+  "cal.saved": "저장됨",
+  "allg.save": "저장",
+  "allg.cancel": "취소",
   "a11y.menu": "메뉴 열기",
   "a11y.share": "앱 공유",
   "a11y.lang": "언어 선택",
